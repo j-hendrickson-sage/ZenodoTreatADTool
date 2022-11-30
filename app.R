@@ -35,7 +35,7 @@ server <- function(input, output) {
   
   output$downloadData01 <- downloadHandler(
     filename = function() {
-      paste0(Sys.time(), "_TREATAD_Zenodo.csv")
+      paste0(Sys.Date(), "_TREATAD_Zenodo.csv")
     },
     content = function(fname) {
       write.csv(df(), fname)
