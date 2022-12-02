@@ -11,7 +11,7 @@ ui <- basicPage(
   h2("The TREAT-AD Community Data"),
   DT::dataTableOutput("mytable"),
   fluidPage(
-    actionButton("action", label = "pullData"),
+    actionButton("action", label = "Pull Zenodo Data"),
     uiOutput("downloadData")
   )
 )
