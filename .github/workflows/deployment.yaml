@@ -28,8 +28,8 @@ jobs:
         
           install.packages(c("shiny", "DT", "reticulate"))
           library(reticulate)
-          reticulate::virtualenv_create(envname = 'python3_env')
-          reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
+          sudo reticulate::virtualenv_create(envname = 'python3_env')
+          sudo reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
           
         shell: Rscript {0}
 
