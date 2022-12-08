@@ -2,8 +2,6 @@ library(DT)
 library(shiny)
 library(reticulate)
 
-reticulate::virtualenv_create(envname = 'python3_env')
-reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
 reticulate::use_virtualenv('python3_env', required = T)
 reticulate::source_python("requestData.py")
 
