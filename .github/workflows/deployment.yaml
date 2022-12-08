@@ -8,22 +8,29 @@ on:
 jobs:
   shiny-deploy:
     runs-on: ubuntu-latest
+    container: rocker/rstudio:4.2.2
     env:
-      # Note, this name is referred to in 'global.R'
-      VENV_NAME: virtual_env
- 
+       # This should not be necessary for installing from public repo's however install_github() fails without it.
+      GITHUB_PAT: ${{ secrets.REPO_PAT }}
+      
     steps:
+    
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libz-dev libxml2
  
       - uses: actions/checkout@v2
         
       - name: Install R packages
         run: |
-          # The binary package distributions from R Studio dramatically speed up installation time
-          options(repos = c(REPO_NAME = "https://packagemanager.rstudio.com/all/__linux__/focal/latest", 
-             getOption("repos")))
-          install.packages(c("shiny", "tidyverse", "DT"))
+          options(repos = c(REPO_NAME = "https://packagemanager.rstudio.com/all/__linux__/focal/latest", getOption("repos")))
+        
+          install.packages(c("shiny", "DT", "reticulate"))
+          library(reticulate)
           reticulate::virtualenv_create(envname = 'python3_env')
           reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
+          
         shell: Rscript {0}
 
       - name: Authorize and deploy app
@@ -31,11 +38,12 @@ jobs:
           branch<-Sys.getenv("GITHUB_REF_NAME")
           repo<-Sys.getenv("GITHUB_REPOSITORY")
           appName<-strsplit(repo, "/")[[1]][2]
-
+          appName = paste(appName, "", sep="")
+          
           rsConnectUser <-"${{ secrets.RSCONNECT_USER }}"
           rsConnectToken <- "${{ secrets.RSCONNECT_TOKEN }}"
           rsConnectSecret <- "${{ secrets.RSCONNECT_SECRET }}"
  
           rsconnect::setAccountInfo(rsConnectUser, rsConnectToken, rsConnectSecret)
-          rsconnect::deployApp(appName = appName)
+          rsconnect::deployApp(appName = appName, forceUpdate = TRUE)
         shell: Rscript {0}
