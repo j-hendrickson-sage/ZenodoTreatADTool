@@ -19,6 +19,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libz-dev libxml2
+          
+      - name: Create and Activate Python Virtual Environment
+        shell: bash
+        run: |
+          python3 -m venv python3_env
+          chmod 755 python3_env/bin/activate
+          source python3_env/bin/activate
  
       - uses: actions/checkout@v2
         
@@ -28,7 +35,6 @@ jobs:
         
           install.packages(c("shiny", "DT", "reticulate"))
           library(reticulate)
-          sudo reticulate::virtualenv_create(envname = 'python3_env')
           sudo reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
           
         shell: Rscript {0}
