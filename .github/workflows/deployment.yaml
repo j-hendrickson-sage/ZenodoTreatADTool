@@ -18,7 +18,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-venv build-essential checkinstall libffi-dev python-dev
+          sudo apt-get install -y python3-venv
           
       - name: Create and Activate Python Virtual Environment
         shell: bash
@@ -26,6 +26,7 @@ jobs:
           python3 -m venv .venv
           chmod 755 .venv/bin/activate
           source .venv/bin/activate
+          pip install rsconnect-python
  
       - uses: actions/checkout@v2
         
