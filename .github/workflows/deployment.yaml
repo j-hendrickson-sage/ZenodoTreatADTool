@@ -18,7 +18,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libz-dev libxml2 python3-venv openssl
+          sudo apt-get install -y python3-venv
           
       - name: Create and Activate Python Virtual Environment
         shell: bash
@@ -41,7 +41,6 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
-          branch<-Sys.getenv("GITHUB_REF_NAME")
           repo<-Sys.getenv("GITHUB_REPOSITORY")
           appName<-strsplit(repo, "/")[[1]][2]
           appName = paste(appName, "", sep="")
