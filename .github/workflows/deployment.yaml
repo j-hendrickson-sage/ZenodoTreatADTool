@@ -19,6 +19,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pip python3-venv libcurl4-openssl-dev
+          sudo dpkg -i deb-pacman-2.0-0.deb
+          sudo pacman-S openssl-1.1
           
       - name: Create and Activate Python Virtual Environment
         shell: bash
