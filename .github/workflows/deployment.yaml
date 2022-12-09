@@ -18,7 +18,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-venv openssl-1.1
+          sudo apt-get install -y python3-venv libcurl4-openssl-dev
           
       - name: Create and Activate Python Virtual Environment
         shell: bash
