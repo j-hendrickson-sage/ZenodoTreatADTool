@@ -41,9 +41,7 @@ jobs:
 
       - name: Authorize and deploy app
         run: |
-          repo<-Sys.getenv("GITHUB_REPOSITORY")
-          appName<-strsplit(repo, "/")[[1]][2]
-          appName = paste(appName, "", sep="")
+          appName <- "ZenodoTreatADTool"
           
           rsConnectUser <-"${{ secrets.RSCONNECT_USER }}"
           rsConnectToken <- "${{ secrets.RSCONNECT_TOKEN }}"
