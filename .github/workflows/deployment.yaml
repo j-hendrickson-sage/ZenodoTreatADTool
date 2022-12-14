@@ -9,7 +9,6 @@ on:
 jobs:
   shiny-deploy:
     runs-on: ubuntu-latest
-    container: rocker/rstudio:4.2.2
     env:
       VENV_NAME: python3_env
        # This should not be necessary for installing from public repo's however install_github() fails without it.
