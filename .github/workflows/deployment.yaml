@@ -19,8 +19,8 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
-          sudo apt-get install -y pip3 Python3-venv libcurl4-openssl-dev
+          sudo apt-get install -y python3.8 python3-pip
+          sudo apt-get install -y pip Python3-venv libcurl4-openssl-dev
           
       - uses: actions/checkout@v2
           
