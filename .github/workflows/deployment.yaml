@@ -1,3 +1,4 @@
+#automatic deployment
 name: shiny-deploy
 
 on:
