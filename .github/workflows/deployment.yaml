@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     container: rocker/rstudio:4.2.2
     env:
+      VENV_NAME: python3_env
        # This should not be necessary for installing from public repo's however install_github() fails without it.
       GITHUB_PAT: ${{ secrets.REPO_PAT }}
       
@@ -18,33 +19,37 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-venv libcurl4-openssl-dev
+          sudo apt-get install -y pip python3.8-venv libcurl4-openssl-dev
+          
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-pandoc@v1
           
       - name: Create and Activate Python Virtual Environment
         shell: bash
         run: |
-          python3 -m venv .venv
-          chmod 755 .venv/bin/activate
-          source .venv/bin/activate
-          pip install rsconnect-python
+          python3 -m venv "${{ env.VENV_NAME }}"
+          chmod 755 "${{ env.VENV_NAME }}"/bin/activate
+          source "${{ env.VENV_NAME }}"/bin/activate
+          
+      - name: Install Python Dependencies
+        shell: bash
+        run: |
+          source "${{ env.VENV_NAME }}"/bin/activate
+          pip3 install requests pandas
         
       - name: Install R packages
         run: |
+          # The binary package distributions from R Studio dramatically speed up installation time
           options(repos = c(REPO_NAME = "https://packagemanager.rstudio.com/all/__linux__/focal/latest", getOption("repos")))
-        
-          install.packages(c("shiny", "DT", "reticulate", "rsconnect", "openssl"))
-          library(reticulate)
-          reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
+          install.packages(c("shiny", "DT", "reticulate", "rsconnect"))
           
         shell: Rscript {0}
 
       - name: Authorize and deploy app
         run: |
+          branch<-Sys.getenv("GITHUB_REF_NAME")
           repo<-Sys.getenv("GITHUB_REPOSITORY")
           appName<-strsplit(repo, "/")[[1]][2]
-          appName = paste(appName, "", sep="")
+          appName <- paste(appName, branch, sep="-")
         
           rsConnectUser <-"${{ secrets.RSCONNECT_USER }}"
           rsConnectToken <- "${{ secrets.RSCONNECT_TOKEN }}"
