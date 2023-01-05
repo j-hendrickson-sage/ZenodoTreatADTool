@@ -22,6 +22,8 @@ def requestData(response):
   title = []
   uniqueViews = []
   uniqueDownloads = []
+  views = []
+  downloads = []
 
   for i in range(0,  len(neededData['hits'])):
     doi.append(neededData['hits'][i]['metadata']['doi'])
@@ -29,7 +31,9 @@ def requestData(response):
     title.append(neededData['hits'][i]['metadata']['title'])
     uniqueViews.append(neededData['hits'][i]['stats']['unique_views'])
     uniqueDownloads.append(neededData['hits'][i]['stats']['unique_downloads'])
+    views.append(neededData['hits'][i]['stats']['version_views'])
+    downloads.append(neededData['hits'][i]['stats']['version_downloads'])
     
-    df = pd.DataFrame(list(zip(doi, community, title, uniqueViews, uniqueDownloads)), columns =['doi', 'community', 'title', "uniqueViews", "uniqueDownlods"])
+    df = pd.DataFrame(list(zip(doi, community, title, uniqueViews, uniqueDownloads, views, downloads)), columns =['doi', 'community', 'title', "uniqueViews", "uniqueDownlods", "views", "downloads"])
     
   return df
