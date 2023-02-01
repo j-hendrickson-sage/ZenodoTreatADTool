@@ -19,8 +19,9 @@ ui <- basicPage(
 server <- function(input, output) {
   
   df <- reactive({
-    response <- getResponse()
-    requestData(response)
+    response_treatad <- getResponse(community = "treatad")
+    response_ycharos <- getResponse(community = "ycharos")
+    rbind(requestData(response = response_treatad, communityDisplayName = "TREAT-AD"),requestData(response = response_ycharos, communityDisplayName = "YCharOS")) 
   }) %>%
     bindEvent(input$action)
   
