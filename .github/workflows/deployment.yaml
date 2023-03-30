@@ -21,7 +21,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3.10-venv openssl
+          sudo apt-get install -y python3.10-venv openssl11-libs
           
       - uses: actions/checkout@v2
           
