@@ -2,7 +2,7 @@ import requests
 import pandas as pd
                                 
 def getResponse(community):
-  ACCESS_TOKEN = 'FUbPO66mRefZbFdQKNBbO7ZwTMMU37dQpaji4x4fZ08dpJnKYlHNyb6IFrv7'
+  ACCESS_TOKEN = getenv("ZenodoAPI")
 
   response = requests.get('https://zenodo.org/api/records',
                         params={'communities': community, 'size': 1000,

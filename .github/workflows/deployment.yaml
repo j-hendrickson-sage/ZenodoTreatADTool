@@ -12,6 +12,7 @@ jobs:
     container: rocker/rstudio:4.2.2
     env:
       VENV_NAME: python3_env
+      ZenodoAPI: ${{secrets.ZenodoAPI}}
        # This should not be necessary for installing from public repo's however install_github() fails without it.
       GITHUB_PAT: ${{ secrets.REPO_PAT }}
       
@@ -20,7 +21,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3.10-venv libcurl4-openssl-dev
+          sudo apt-get install -y python3.10-venv libssl1.1 openssl
           
       - uses: actions/checkout@v2
           
