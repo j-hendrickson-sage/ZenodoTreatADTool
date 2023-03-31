@@ -9,7 +9,7 @@ on:
 jobs:
   shiny-deploy:
     runs-on: ubuntu-latest
-    container: rocker/rstudio:4.2.2
+    container: rocker/rstudio:4.1.2
     env:
       VENV_NAME: python3_env
       ZenodoAPI: ${{secrets.ZenodoAPI}}
