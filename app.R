@@ -4,8 +4,8 @@ library(reticulate)
 
 if (!file.exists("python3_env")) utils::unzip("python3_env.zip")
 
-reticulate::virtualenv_create(envname = 'python3_env')
-reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
+# reticulate::virtualenv_create(envname = 'python3_env')
+# reticulate::virtualenv_install('python3_env', packages = c('requests', "pandas"))
 reticulate::use_virtualenv('python3_env', required = T)
 reticulate::source_python("requestData.py")
 
