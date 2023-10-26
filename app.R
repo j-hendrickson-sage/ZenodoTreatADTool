@@ -12,7 +12,7 @@ reticulate::source_python("requestData.py")
 ui <- basicPage(
   h2("The TREAT-AD Community Data"),
   DT::dataTableOutput("mytable"),
-  fluidPage(
+  fluidPage(theme = shinytheme("slate"),
     actionButton("action", label = "Pull Zenodo Data"),
     uiOutput("downloadData")
   )
